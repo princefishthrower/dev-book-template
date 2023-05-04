@@ -1,0 +1,10 @@
+# ignore all the latex nonesense
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.fls
+*.fdb_latexmk
+_minted*
+__latexindent*

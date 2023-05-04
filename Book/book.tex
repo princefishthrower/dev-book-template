@@ -1,0 +1,673 @@
+% set to 'oneside' for web style, 'twoside' for book print
+% for amazon:
+% \documentclass[paper=6in:9in,pagesize=pdftex,headinclude=on,footinclude=on,12pt,twoside]{scrbook}
+% \areaset[0.50in]{4.5in}{8in}
+% for normal size:
+\documentclass[a4paper,headinclude=on,footinclude=on,12pt,oneside]{scrbook}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xspace}
+\usepackage{bera}
+\usepackage{pifont}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{float}
+
+% for multiple appendices
+\usepackage[toc,page]{appendix}
+
+% for index
+\usepackage{imakeidx}
+
+% for fancy icons in listing
+\usepackage{fontawesome}
+
+% for advanced code highlighting
+\usepackage{minted}
+
+% for sizing emoji png's to font height
+\usepackage{scalerel}
+
+\usepackage{xparse}
+
+% improve spacing for section listing in table of contents
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3em}}
+\makeatother
+
+% for spacing for chapters
+\usepackage{tocloft}
+\makeatletter
+\renewcommand{\numberline}[1]{%
+  \@cftbsnum #1\@cftasnum~\@cftasnumb%
+}
+\makeatother
+
+% for highlighted sections of texts i.e. "frames", as well as code snippets
+\usepackage[most,minted]{tcolorbox}
+\tcbuselibrary{listings,minted,breakable}
+
+\lstset{
+  breaklines=true,
+  breakatwhitespace=false,
+  xleftmargin=1em,
+  frame=single,
+  numbers=left,
+  numbersep=5pt,
+}
+
+% \usepackage{listings}
+% % TODO: this doesn't solve the multiple page code snippet issue
+% % see maybe https://tex.stackexchange.com/questions/117836/code-listing-spanning-multiple-pages-with-captions-at-top
+% \lstset{float=H}
+
+\usetikzlibrary{calc,shadows.blur}
+
+%%%%%%%%%%%%
+
+\DeclareFixedFont{\numcap}{T1}{phv}{bx}{n}{3cm}
+\DeclareFixedFont{\capitalizedtext}{T1}{phv}{bx}{n}{1.5cm}
+\DeclareFixedFont{\textaut}{T1}{phv}{bx}{n}{0.8cm} 
+
+\addtokomafont{chapter}{\color{gray}\capitalizedtext}
+\addtokomafont{section}{\color{white}\small}
+\addtokomafont{subsection}{\color{white}\small}
+\setkomafont{pagehead}{\sffamily\small}
+\setkomafont{captionlabel}{\sffamily\small\bfseries}
+\setkomafont{caption}{\sffamily\small}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,
+    decorations.pathreplacing,decorations.pathmorphing,shapes,
+    matrix,shapes.symbols}
+
+\tikzset{
+  punktchain/.style={
+    rectangle, 
+    rounded corners, 
+    draw=black!20, thin,
+    minimum height=3em, 
+    text centered},
+  peu/.style={
+    rectangle,
+    fill opacity=1,
+    %rounded corners, 
+    fill=white,
+    top color=white,
+    draw=black!20, thin,
+    %text width=10em, 
+    %minimum height=3em, 
+    text centered},
+  line/.style={draw, thin, <-},
+  element/.style={
+    tape,
+    top color=white,
+    bottom color=blue!50!black!60!,
+    minimum width=8em,
+    draw=blue!40!black!90, very thick,
+    text width=10em, 
+    minimum height=3.5em, 
+    text centered, 
+    on chain},
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrlayer-scrpage}
+\setlength{\headheight}{25pt}
+\pagestyle{scrheadings}
+\addtokomafont{headsepline}{\color{lightgray}}
+
+\lefoot{\color{black!40}{\hrulefill}}
+\cefoot{\parbox[c][.5in][c]{1cm}{\fcolorbox{black!40}{white}{\thepage}}}
+\refoot{}
+
+\lofoot{\color{black!40}{\hrulefill}}
+\cofoot[{\color{black!40}{---}} {\thepage} {\color{black!40}{---}}]{\parbox[c][.5in][c]{1cm}{\fcolorbox{black!40}{white}{\thepage}}}
+\rofoot[]{}
+
+\usepackage[pdftex,             
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    citecolor=blue,
+    pdftitle={My Awesome Dev Book},
+    pdfauthor={Jane Doe},
+    pdfsubject={Dev Books},
+    pdfkeywords={Dev Books, Software, Coding, Programming, LaTeX, Template},
+    bookmarks, bookmarksnumbered=true]{hyperref}
+
+\tolerance=4000
+\emergencystretch=20pt
+
+\setcounter{secnumdepth}{3}
+
+% titlesec (and thus titleformat) not compatible with scrbook!
+% see: https://tex.stackexchange.com/questions/684543/command-textcap-unavailable-in-encoding-t1
+% \usepackage{titlesec}
+
+% \titleformat{\chapter}[display]
+%     {\usekomafont{sectioning} \usekomafont{chapter}\filleft}
+%     {\numcap\textcolor[named]{gray}\thechapter}
+%     {1em}
+%     {}
+
+% \titleformat{\section}[block]
+%     {\usekomafont{sectioning}\usekomafont{section}
+%      \tikz[overlay]  \fill[color=black,rounded corners=.2ex] (0,-1ex) rectangle (\textwidth,1em);}
+%     { \thesection}
+%     {1em}
+%     {}
+
+% \titleformat{\subsection}[block]
+%     {\usekomafont{sectioning}\usekomafont{subsection}
+%        \tikz[overlay] \fill[color=black!60] (0,-1ex) rectangle (\textwidth-2cm,1em);}
+%     { \thesubsection}
+%     {1em}
+%     {}
+
+\usepackage{lipsum}
+%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumitem}
+
+% for fancy spacing of code snippet title bars
+\usepackage{tabularx}
+\newcolumntype{\CeX}{>{\centering\let\newline\\\arraybackslash}X}%
+\newcommand{\TwoSymbolsAndText}[3]{%
+  \begin{tabularx}{\textwidth}{c\CeX c}%
+    #1 & #2 & #3
+  \end{tabularx}%
+}
+
+\newlist{steps}{enumerate}{4}
+\setlist[steps]{topsep=0pt,partopsep=0pt,itemsep=0pt,parsep=0pt,labelindent=0.5cm,leftmargin=*}
+\setlist[steps,1]{label*=\arabic*.}
+\setlist[steps,2]{label*=\arabic*.}
+\setlist[steps,3]{label*=\arabic*.}
+\setlist[steps,4]{label*=\arabic*.}
+
+\newlist{points}{itemize}{4}
+\setlist[points]{topsep=0pt,partopsep=0pt,itemsep=0pt,parsep=0pt,labelindent=0.5cm,leftmargin=*}
+\setlist[points,1]{label=\tiny\ding{110}}
+\setlist[points,2]{label=\tiny\ding{108}}
+\setlist[points,3]{label=\tiny\ding{72}}
+\setlist[points,4]{label=\tiny\ding{117}}
+
+\newlist{objectives}{itemize}{1}
+\setlist[objectives]{topsep=0pt,partopsep=0pt,itemsep=0pt,parsep=0pt,labelindent=0.5cm,leftmargin=*}
+\setlist[objectives,1]{label=\tiny$\blacktriangleright$}
+
+\newlist{attention}{itemize}{1}
+\setlist[attention]{topsep=0pt,partopsep=0pt,itemsep=0pt,parsep=0pt,labelindent=0.5cm,leftmargin=*}
+\setlist[attention,1]{label=\ding{224}}
+
+\newlist{arrows}{itemize}{4}
+\setlist[arrows]{topsep=0pt,partopsep=0pt,itemsep=0pt,parsep=0pt,labelindent=0.5cm,leftmargin=*}
+\setlist[arrows,1]{label=\tiny\ding{252}}
+\setlist[arrows,2]{label=\tiny\ding{212}}
+\setlist[arrows,3]{label=\tiny\ding{232}}
+\setlist[arrows,4]{label=\tiny\ding{217}}
+%%%%%%%%%%%%%%%%%%%%
+\usepackage[tikz]{bclogo}
+\renewcommand\logowidth{14pt}
+
+\usepackage{colortbl}
+\arrayrulecolor{gray}
+
+% Custom colors
+\definecolor{monokaiPink}{HTML}{F92771}
+\definecolor{npmred}{HTML}{BB2E3E}
+\definecolor{codebackground}{HTML}{F2F2F2}
+
+\usemintedstyle{default}
+
+%%% Custom Commands %%%
+\newcommand{\link}[2]{\textbf{\textcolor{monokaiPink}{\href{#2}{#1}}}}
+
+\newcommand{\standardfigure}[3]{\begin{figure}[H]\begin{center}\includegraphics[width=#1]{#2}\caption{#3}\label{fig:#2}\end{center}\end{figure}}
+
+% for that pain in the ass @ symbol
+\newcommand{\at}{\makeatletter @\makeatother}
+
+% for the dollar symbol
+\newcommand{\dollar}{\$}
+
+% custom command for NPM-like red code snippets
+\NewDocumentCommand\codeword{v}{\texttt{\textbf{\textcolor{npmred}{#1}\index{#1}}}}
+
+\newtcblisting{code}[2]{
+listing engine=minted,
+minted language=#1,
+minted options={autogobble,breaklines,breakanywhere,bgcolor=codebackground,breaksymbolleft=,breaksymbolright=,fontsize=\footnotesize},
+listing only,
+size=title,
+arc=1.5mm,
+breakable,
+enhanced jigsaw,
+colframe=Black,
+coltitle=White,
+boxrule=0.5mm,
+colback=codebackground,
+coltext=Black,
+title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
+}
+
+% can't work - see https://tex.stackexchange.com/questions/596791/newdocumentenvironment-not-working-as-expected-with-listing-and-tcolorbox?noredirect=1#comment1496456_596791
+% \NewDocumentEnvironment{codeWithCaption}{mmm}{\begin{listing}[H]\begin{codeInput}{#1}{#2}}{\end{codeInput}\caption{#3}\end{listing}}
+
+% juicy code snippets
+\AtBeginDocument{
+\newtcblisting[blend into=listings]{codeInput}[3]{
+  listing engine=minted,
+  minted language=#1,
+  minted options={breaklines,breaksymbolleft=,breaksymbolright=,fontsize=\footnotesize},
+  listing only,
+  listing remove caption=true,
+  size=title,
+  arc=1.5mm,
+  breakable,
+  enhanced jigsaw,
+  colframe=Black,
+  coltitle=White,
+  boxrule=0.5mm,
+  colback=codebackground,
+  coltext=Black,
+  title=\TwoSymbolsAndText{\faCode}{%
+    \footnotesize{\texttt{#2}}
+  }{\faCode},
+  list text=#3
+}
+\newtcbinputlisting[blend into=listings]{\codeFromFile}[4]{
+  listing engine=minted,
+  minted language=#1,
+  listing file={#4},
+  minted options={breaklines,breaksymbolleft=,breaksymbolright=,fontsize=\footnotesize},
+  listing only,
+  listing remove caption=true,
+  size=title,
+  arc=1.5mm,
+  breakable,
+  enhanced jigsaw,
+  colframe=Black,
+  coltitle=White,
+  boxrule=0.5mm,
+  colback=codebackground,
+  coltext=Black,
+  title=\TwoSymbolsAndText{\faCode}{%
+    \footnotesize{\texttt{#2}}
+  }{\faCode},
+  list text=#3
+}
+}
+
+% emoji Commands
+\NewDocumentCommand\warning{}{
+  \includegraphics[width=0.5cm, height=0.5cm]{images/emojis/u26A0.png}
+}
+
+\NewDocumentCommand\information{}{
+  \includegraphics[width=0.5cm, height=0.5cm]{images/emojis/u2139.png}
+}
+
+\NewDocumentCommand\greenCheck{}{
+  \includegraphics[width=0.5cm, height=0.5cm]{images/emojis/u2705.png}
+}
+
+\NewDocumentCommand\wink{}{
+  \includegraphics[scale=0.05]{emojis/u1F609.png}
+}
+
+\NewDocumentCommand\thumbsup{}{
+  \includegraphics[scale=0.05]{emojis/u1F44D.0.png}
+}
+
+\NewDocumentCommand\rocket{}{
+  \includegraphics[scale=0.05]{emojis/u1F680.png}
+}
+
+\NewDocumentCommand\beers{}{
+  \includegraphics[scale=0.05]{emojis/u1F37B.png}
+}
+
+\NewDocumentCommand\joy{}{
+  \includegraphics[scale=0.05]{emojis/u1F602.png}
+}
+
+\NewDocumentCommand\soup{}{
+  \includegraphics[scale=0.05]{emojis/u1F35C.png}
+}
+
+\NewDocumentCommand\nuts{}{
+  \includegraphics[scale=0.05]{emojis/u1F95C.png}
+}
+
+\NewDocumentCommand\partypopper{}{
+  \includegraphics[scale=0.05]{emojis/u1F389.png}
+}
+
+% for the tree outputs
+\DeclareUnicodeCharacter{251C}{\mbox{\kern.23em
+  \vrule height2.2exdepth1exwidth.4pt\vrule height2.2ptdepth-1.8ptwidth.23em}}
+\DeclareUnicodeCharacter{2500}{\mbox{\vrule height2.2ptdepth-1.8ptwidth.5em}}
+\DeclareUnicodeCharacter{2514}{\mbox{\kern.23em
+  \vrule height2.2exdepth-1.8ptwidth.4pt\vrule height2.2ptdepth-1.8ptwidth.23em}}
+\DeclareUnicodeCharacter{2502}{|}
+
+\newtcolorbox{highlightBox}[4][]{%
+  enhanced jigsaw,
+  colback=#3!10!white,%
+  colframe=black!80!black,
+  size=small,
+  boxrule=1pt,
+  title=\raisebox{-3pt}{#4} \textbf{#2} \raisebox{-3pt}{#4},
+  halign title=flush center,
+  coltitle=black,
+  breakable,
+  drop shadow=#3!50!white,
+  attach boxed title to top left={xshift=1cm,yshift=-\tcboxedtitleheight/2,yshifttext=-\tcboxedtitleheight/2},
+  minipage boxed title=7cm,
+  boxed title style={%
+    colback=#3!10!white,
+    size=fbox,
+    boxrule=1pt,
+    boxsep=2pt,
+    underlay={
+      \coordinate (dotA) at ($(interior.west) + (-0.5pt,0)$);
+      \coordinate (dotB) at ($(interior.east) + (0.5pt,0)$);
+    },
+  },
+  #1,
+}
+
+% for index (and linking to it)
+\makeindex[title={Index\label{index}}]
+
+% to get rid of listoflistings warning
+% see https://tex.stackexchange.com/questions/51867/koma-warning-about-toc
+% should also be loaded last.... sigh
+\usepackage{scrhack}
+
+% fix for code highlighting in sass files
+% see: https://tex.stackexchange.com/questions/684739/minted-with-tcolorbox-syntax-highlighting-issue-with-sass-code-snippet/684745
+\makeatletter
+\AddToHook{cmd/minted@addcachefile/after}{%
+\@namedef{PYG@tok@err}{\def\PYG@bc##1{##1}}}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%% First Page
+\title{\capitalizedtext{My Awesome Dev Book}\\\small{Your subtitle here!}}
+\author{
+    \textaut{Jane Doe}\\https://yourwebsiteorblog.com
+}
+\date{\today}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+\listoflistings
+\addcontentsline{toc}{chapter}{List of Listings}
+
+%*************************************************************************
+\chapter*{Foreword}
+\addcontentsline{toc}{chapter}{Foreword}
+%*************************************************************************
+\dictum[Isaac Newtown, 1675]{If I have seen further it is by standing on the shoulders of Giants.}
+
+\minisec{Here's a Section Title}
+
+Here is some normal book text, and here are some points:
+
+\begin{arrows}
+\item Point one
+\item Point two
+\item Point three
+\end{arrows}
+
+\minisec{Highlight Boxes}
+
+You can make use of these highlight boxes:
+
+\begin{highlightBox}{Green Highlight Boxes}{green}{\greenCheck}
+I use green highlight boxes for positive or success milestones in a book.
+\end{highlightBox}
+
+\begin{highlightBox}{Blue Highlight Boxes}{blue}{\information}
+I use blue highlight boxes for important caveats, information, or tips.
+\end{highlightBox}
+
+\begin{highlightBox}{Yellow Highlight Boxes}{yellow}{\warning}
+I use yellow highlight boxes for any gotchyas, warnings, or things that could go wrong.
+\end{highlightBox}
+
+\minisec{Use the Index, Listings, Recipes, and Figures to Your Advantage}
+
+By the power of LaTeX, a variety of helpful references have been built into this book:
+
+The \hyperref[index]{Index} includes all references to all packages, files, and keywords used throughout this book. Typically files are referenced in cronological order, so you can observe changes made to specific files throughout the production of ReduxPlate.
+
+The list of listings also includes every code snippet in the entire book with a detailed description. Use it to jump to whatever snippet you'd like to look at.
+
+Likewise, the list of Recipes is a custom listing of reusable style code that shouldn't need to be refactored away from ReduxPlate - these recipes are generic snippets or files that can be reused in any SaaS product.
+
+\minisec{Are You Ready?}
+
+Something something, let's go!
+
+- Jane Doe
+
+\textit{Town, Country, May 2023}
+
+%*************************************************************************
+\chapter{The First Chapter}
+%*************************************************************************
+\dictum%
+[Marc Andreessen]%author
+{It's really rare for people to have a successful start-up in this industry without a breakthrough product. I'll take it a step further. It has to be a radical product. It has to be something where, when people look at it, at first they say, 'I don't get it, I don't understand it. I think it's too weird, I think it's too unusual.
+} %text
+
+\section{The First Section of The First Chapter}
+
+Here's some text in the section
+
+%*************************************************************************
+\chapter{The Second Chapter}
+%*************************************************************************
+\dictum%
+[Steve Jobs, 1997]%author
+{You've got to start with the customer experience and work backwards to the technology.
+} %text
+
+\section{Introduction to the Frontend}
+
+In a software book, it's often nice to list chapter objectives at the start of the chapter. I do it this way:
+
+\minisec{Chapter Objectives}
+\begin{arrows}
+\item Some objective
+\item Some other objective
+\item Another objective
+\end{arrows}
+
+\minisec{Code Snippets}
+
+Code snippets are of course also essential in a dev book. Here is a code snippet:
+
+\begin{codeInput}{bash}{terminal}{Installing Express via npm.}
+npm install express
+\end{codeInput}
+
+Here's a longer code snippet, an MIT license:
+
+\begin{codeInput}{markdown}{LICENSE}{An example MIT license code snippet.}
+MIT License
+
+Copyright (c) Your Company LLC and its affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+\end{codeInput}
+
+and an even longer code snippet, an SEO React TypeScript component:
+
+\begin{codeInput}{jsx}{Seo.tsx}{A basic SEO React component.}
+import * as React from "react"
+import { Helmet } from "react-helmet"
+import { useStaticQuery, graphql } from "gatsby"
+import { siteMetadata } from "../../gatsby-config"
+
+export interface ISeoProps {
+  title: string
+  description?: string
+}
+
+function Seo(props: ISeoProps) {
+  const { description, title } = props
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            description
+            author
+          }
+        }
+      }
+    `
+  )
+
+  return (
+    <Helmet>
+      {/* General tags */}
+      <title>{title}</title>
+      <meta
+        name="description"
+        content={description || siteMetadata.description || ""}
+      />
+      <meta property="og:title" content={title} />
+      <meta
+        property="og:description"
+        content={description || siteMetadata.description || ""}
+      />
+
+      {/* Twitter Card tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:creator" content={site.siteMetadata?.author || ""} />
+      <meta name="twitter:title" content={title} />
+      <meta
+        name="twitter:description"
+        content={description || siteMetadata.description || ""}
+      />
+    </Helmet>
+  )
+}
+
+export default Seo
+\end{codeInput}
+
+\begin{codeInput}{sass}{toasts.scss}{A small SASS file.}
+.Toastify__progress-bar--default {
+  background: \$primary !important;
+}
+\end{codeInput}
+
+You can also include code from a file. For example, here's a SCSS file:
+
+\codeFromFile{sass}{\_toasts.scss}{The custom styling for the app's toasts.}{./snippets/_toasts.scss}
+
+\codeFromFile{jsx}{Seo.tsx}{The custom styling for the app's toasts.}{./snippets/Seo.tsx}
+
+\minisec{Figures}
+
+Figures. Figures are also important. Here is an image:
+
+\standardfigure{\textwidth/2}{folder-one/example}{Example caption for the image.}
+
+They'll show up automatically in the list of figures.
+
+\minisec{Emojis}
+
+Emojis can also be fun to include in a book. You can use them by the custom commands that are included in this .tex file. Here are some examples:
+
+Soup: \soup
+Beers: \beers
+Party Popper: \partypopper
+
+That's about it! Those should be all the components you need to write an amazing software engineering book. Good luck!
+
+\chapter*{Afterword}
+\addcontentsline{toc}{chapter}{Afterword}
+
+\section*{You've Done It!}
+
+Something, something.
+
+Cheers! \beers
+
+-Jane
+
+\chapter*{Credits and Thanks}
+\addcontentsline{toc}{chapter}{Credits}
+
+Credit where credit is due! (Note that I am not sponsored or supported by any of these platforms or individuals in anyway):
+
+\begin{enumerate}
+\item Netlify, for their awesome "feels like stealing" free tier
+\item Bitbucket, for their great UI and tooling, including Bitbucket Pipelines
+\item Digital Ocean, for the sheer ease of to start up a Linux instance with a few clicks
+\item \link{Dabolus on DeviantArt}{https://www.deviantart.com/dabolus}, for all of those juicy hi-res emoji PNGs that I've used generously throughout the book!
+\end{enumerate}
+
+% appendices
+\begin{appendices}
+
+\chapter{Appendix 1}
+
+Here is appendix 1.
+
+\chapter{Appendix 2}
+
+Here is appendix 2.
+
+\end{appendices}
+
+% index!
+\printindex
+\addcontentsline{toc}{chapter}{Index}
+
+
+% about the author
+About the Author
+
+\standardfigure{\textwidth/2}{about/author}{Jane Doe}
+
+Jane Doe is a Senior Full Stack Developer with over 10 years of programming experience, the last 7 of which were in industry. When she's not writing code, building SaaS Products, or teaching full stack software engineering, she can be found painting, writing flute music. She is originally from New York City, but currently resides in a country, in a town, on planet earth.
+
+\end{document}

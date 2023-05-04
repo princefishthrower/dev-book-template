@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[paperheight=9.250in,paperwidth=12.394in,margin=1in,heightrounded]{geometry}
+\usepackage{lmodern}         % for the looks
+\usepackage[T1]{fontenc}     % to hypenate accented characters correctly
+\usepackage[utf8]{inputenc}  % just in case we go for non-ascii
+\usepackage{tikz}            % the graphics
+\usepackage{textcomp}        % for \textregistered
+
+% custom colors
+\definecolor{covercolor}{HTML}{067BB0}
+\definecolor{black}{HTML}{000000}
+
+% Defining a new coordinate system for the page:
+%
+% --------------------------
+% |(-1,1)    (0,1)    (1,1)|
+% |                        |
+% |(-1,0)    (0,0)    (1,0)|
+% |                        |
+% |(-1,-1)   (0,-1)  (1,-1)|
+% --------------------------
+\makeatletter
+\def\parsecomma#1,#2\endparsecomma{\def\page@x{#1}\def\page@y{#2}}
+\tikzdeclarecoordinatesystem{page}{
+    \parsecomma#1\endparsecomma
+    \pgfpointanchor{current page}{north east}
+    % Save the upper right corner
+    \pgf@xc=\pgf@x%
+    \pgf@yc=\pgf@y%
+    % save the lower left corner
+    \pgfpointanchor{current page}{south west}
+    \pgf@xb=\pgf@x%
+    \pgf@yb=\pgf@y%
+    % Transform to the correct placement
+    \pgfmathparse{(\pgf@xc-\pgf@xb)/2.*\page@x+(\pgf@xc+\pgf@xb)/2.}
+    \expandafter\pgf@x\expandafter=\pgfmathresult pt
+    \pgfmathparse{(\pgf@yc-\pgf@yb)/2.*\page@y+(\pgf@yc+\pgf@yb)/2.}
+    \expandafter\pgf@y\expandafter=\pgfmathresult pt
+}
+\makeatother
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{tikzpicture}[remember picture,overlay,every node/.style={anchor=center}]
+
+\node at (page cs: 0.5,1) % top bar
+      {\begin{tikzpicture}[remember picture, overlay]
+      \fill[fill=covercolor] (-7,0) rectangle (7,-1);
+      \node[anchor=north] at (0,-1) {\Large\textit{A great catch phrase here!}};
+      \end{tikzpicture}};
+      
+\node at (page cs: 0.5,-0.2) % main cover image
+      {\begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=center,align=center] at (0,5)
+            {\includegraphics[width=0.25\textwidth]{image.png}};
+      \end{tikzpicture}};
+
+\node at (page cs: 0.5,-0.4) % title block
+      {\begin{tikzpicture}[remember picture, overlay]
+      \fill[fill=covercolor] (-7,-2.5) rectangle (7 ,1);
+      \node[align=center] at (0,0)
+            {\resizebox{0.5\linewidth}{!}{\large\color{white}\textbf{My Awesome}}};
+      \node[align=center] at (0,-1.5)
+            {\resizebox{0.5\linewidth}{!}{\large\color{white}\textbf{Dev Book}}};
+            \node[anchor=east,align=right] at (7,-3) {\Huge\color{black}\textit{Subtitle here}};
+      \end{tikzpicture}};
+
+\node at (page cs: 0.5,-0.94) % bottom text
+      {\begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=south west, align=left] at (-7,0)
+            {\large\color{black}
+                  \textbf{Your Company or Brand\textsuperscript{\large{\texttrademark}}}};
+            \node[anchor=south east, align=right] at (7,0) {\Huge\color{black}\textit{Jane Doe}};
+      \end{tikzpicture}};
+
+\end{tikzpicture}
+
+\end{document}
