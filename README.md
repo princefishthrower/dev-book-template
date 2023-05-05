@@ -1,5 +1,7 @@
 # Dev Book Template
 
+_Discussed in detail in my blog post: [Craft a Stylish and Practical Developer Book with this LaTeX Template](https://chrisfrew.in/blog/craft-a-stylish-and-practical-developer-book-with-this-latex-template/)_
+
 ## Prerequisites
 
 You'll need to have the following libraries and packages installed:
@@ -21,7 +23,7 @@ This will build the cover and the book and merge them together into a single PDF
 
 ## Cover
 
-The `cover/` folder contains the `.text` file where the cover page is built. Because I don't want to fight LaTeX, the cover is a completely separate latex file to the rest of the book. This can also be useful for physical prints, where the cover often has to be uploaded separately - at vendors like amazon, for example.
+The `cover/` folder contains the `.tex` file where the cover page is built. Because I don't want to fight LaTeX, the cover is a completely separate latex file to the rest of the book. This can also be useful for physical prints, where the cover often has to be uploaded separately - at vendors like amazon, for example.
 
 ## Book
 
