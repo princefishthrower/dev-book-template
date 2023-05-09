@@ -1,10 +1,10 @@
-# build book with latex
-cd Book
-pdflatex --interaction=batchmode book.tex
-
 # build cover with latex
 cd ../Cover
-pdflatex --interaction=batchmode cover.tex
+lualatex -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -recorder cover.tex
+
+# build book with latex
+cd Book
+lualatex -shell-escape -synctex=1 -interaction=nonstopmode -file-line-error -recorder book.tex
 
 # merge cover and book
 cd ..

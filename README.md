@@ -8,8 +8,13 @@ You'll need to have the following libraries and packages installed:
 
 - latex (`brew install --cask mactex`)
 - ghostscript (`brew install ghostscript`)
+- the Fira Code font (`brew install --cask font-fira-code`)
 
 Raise an issue or make a pull request if I've forgotten anything!
+
+## Emojis
+
+Currently, emojis should work without any extra LaTeX configuration. You'll find in the `book.tex` file a fallback for emojis. By default, it is `AppleColorEmoji`, but if you are on Windows or Linux, you will need to use a different emoji font like `SegoeUIEmoji` or `NotoColorEmoji`.
 
 ## Build Book PDF
 
@@ -28,3 +33,8 @@ The `cover/` folder contains the `.tex` file where the cover page is built. Beca
 ## Book
 
 The `book/` folder contains the `.tex` file where you'll actually do the writing. It has many examples of everything you'd need to write a developer book.
+
+
+## Listings or Index Missing
+
+This is a caveat of LaTeX, it needs to build the document twice. Simply run `/bin/bash scripts/build-book.sh` again and the listings and so on should be properly listed.

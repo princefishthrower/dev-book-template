@@ -38,6 +38,19 @@
 
 \usepackage{xparse}
 
+\usepackage{fontspec}
+
+\directlua{luaotfload.add_fallback
+   ("emojifallback",
+    {
+      "AppleColorEmoji:mode=harf;"
+    }
+   )}
+
+\setmonofont{Fira Code}[
+  RawFeature={fallback=emojifallback}
+]
+
 % improve spacing for section listing in table of contents
 \makeatletter
 \renewcommand*\l@section{\@dottedtocline{1}{1.5em}{3em}}
@@ -240,26 +253,6 @@
 % custom command for NPM-like red code snippets
 \NewDocumentCommand\codeword{v}{\texttt{\textbf{\textcolor{npmred}{#1}\index{#1}}}}
 
-\newtcblisting{code}[2]{
-listing engine=minted,
-minted language=#1,
-minted options={autogobble,breaklines,breakanywhere,bgcolor=codebackground,breaksymbolleft=,breaksymbolright=,fontsize=\footnotesize},
-listing only,
-size=title,
-arc=1.5mm,
-breakable,
-enhanced jigsaw,
-colframe=Black,
-coltitle=White,
-boxrule=0.5mm,
-colback=codebackground,
-coltext=Black,
-title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
-}
-
-% can't work - see https://tex.stackexchange.com/questions/596791/newdocumentenvironment-not-working-as-expected-with-listing-and-tcolorbox?noredirect=1#comment1496456_596791
-% \NewDocumentEnvironment{codeWithCaption}{mmm}{\begin{listing}[H]\begin{codeInput}{#1}{#2}}{\end{codeInput}\caption{#3}\end{listing}}
-
 % juicy code snippets
 \AtBeginDocument{
 \newtcblisting[blend into=listings]{codeInput}[3]{
@@ -280,7 +273,9 @@ title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
   title=\TwoSymbolsAndText{\faCode}{%
     \footnotesize{\texttt{#2}}
   }{\faCode},
-  list text=#3
+  list text=#3,
+  enlarge top initially by=12pt,
+  enlarge bottom finally by=8pt
 }
 \newtcbinputlisting[blend into=listings]{\codeFromFile}[4]{
   listing engine=minted,
@@ -301,7 +296,9 @@ title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
   title=\TwoSymbolsAndText{\faCode}{%
     \footnotesize{\texttt{#2}}
   }{\faCode},
-  list text=#3
+  list text=#3,
+  enlarge top initially by=12pt,
+  enlarge bottom finally by=8pt
 }
 }
 
@@ -350,14 +347,6 @@ title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
   \includegraphics[scale=0.05]{emojis/u1F389.png}
 }
 
-% for the tree outputs
-\DeclareUnicodeCharacter{251C}{\mbox{\kern.23em
-  \vrule height2.2exdepth1exwidth.4pt\vrule height2.2ptdepth-1.8ptwidth.23em}}
-\DeclareUnicodeCharacter{2500}{\mbox{\vrule height2.2ptdepth-1.8ptwidth.5em}}
-\DeclareUnicodeCharacter{2514}{\mbox{\kern.23em
-  \vrule height2.2exdepth-1.8ptwidth.4pt\vrule height2.2ptdepth-1.8ptwidth.23em}}
-\DeclareUnicodeCharacter{2502}{|}
-
 \newtcolorbox{highlightBox}[4][]{%
   enhanced jigsaw,
   colback=#3!10!white,%
@@ -382,6 +371,8 @@ title=\TwoSymbolsAndText{\faCode}{\footnotesize{\texttt{#2}}}{\faCode}
     },
   },
   #1,
+  enlarge top initially by=12pt,
+  enlarge bottom finally by=8pt
 }
 
 % for index (and linking to it)
